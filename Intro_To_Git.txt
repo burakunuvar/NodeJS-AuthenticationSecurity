@@ -1,0 +1,5 @@
+
+$ git init
+$ ls -a
+& git status
+& git add Intro_To_Git.txt
