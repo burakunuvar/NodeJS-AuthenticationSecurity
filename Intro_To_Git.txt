@@ -56,3 +56,6 @@ Part 4 : Branching and Merging
 
     // log the status , checkout to master branch and merge the updates
         & git merge Branch_Name
+
+    // to push your created branch and set the remote as upstream
+        git push --set-upstream origin <branch_name>
