@@ -53,3 +53,6 @@ Part 4 : Branching and Merging
 
         $ git add .
         & git commit -m " message "
+
+    // log the status , checkout to master branch and merge the updates
+        & git merge Branch_Name
