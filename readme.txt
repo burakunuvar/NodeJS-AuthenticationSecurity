@@ -1,50 +1,53 @@
 Intro & Getting Set Up :
 
-  $ npm init -y
-  $ npm install express body-parser ejs
-  * Create the app.js based on boilerplate with the routes for home , login, register
-
+      $ npm init -y
+      $ npm install express body-parser ejs
+  Create the app.js based on boilerplate with the routes for home , login, register
 
 L1 Security : Username and Password
 
-  $ npm install mongoose
-  * update the app.js with require mongoose and mongoose.connect
-  & const mongoose = require('mongoose');
-  & mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true});
-  & userSchema and model
+      $ npm install mongoose
 
-    " const userSchema = new mongoose.Schema({
-          username: String,
-          password: String
-      });
+  Update the app.js with require mongoose and mongoose.connect
+      $ const mongoose = require('mongoose');
+      $ mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true});
+      $ userSchema and model
+        " const userSchema = new mongoose.Schema({
+              username: String,
+              password: String
+          });
+          const User = mongoose.model("User", userSchema); "
 
-      const User = mongoose.model("User", userSchema); "
+  Build the post route for register
+        " const newUser = new User({
+            username: req.body.username,
+            password: req.body.password
+          }); "
 
-  * build the post route for register
-
-    " const newUser = new User({
-        username: req.body.username,
-        password: req.body.password
-      }); "
-
-  * build the post route for login
-    "User.findOne({email:email},function(err,foundUser){})"
+  Build the post route for login
+        "User.findOne({email:email},function(err,foundUser){})"
 
   Issue : Anyone with access to DB will have access to passwords.
 
 L2 Security : Database Encryption
-
   * https://www.npmjs.com/package/mongoose-encryption
-  $ npm i mongoose-encryption
-  $ https://www.npmjs.com/package/mongoose-encryption#secret-string-instead-of-two-keys
+      $ npm i mongoose-encryption
+
+  For convenience, you can also pass in a single secret string instead of two keys
+  * https://www.npmjs.com/package/mongoose-encryption#secret-string-instead-of-two-keys
+
+  Include or exclude related fields :
+      $ userSchema.plugin(encrypt, { secret: secret , encryptedFields: ["password"] });
 
   Issue : Anyone with access to DB and app.js will have access to passwords.
 
-L2 Security : Environment Variables
+L2 Security Leveraged : Environment Variables
   * https://www.npmjs.com/package/dotenv
-  $ touch .env ( as hidden file)
-    const secret = "ThisIsTheSecret" is moved to .env as SECRET=ThisIsTheSecret
-  $ touch .gitignore ( as hidden file)
+      & npm i dotenv
+      $ require('dotenv').config()
+      $ touch .env ( as hidden file)
+  const secret = "ThisIsTheSecret" is moved to .env as SECRET=ThisIsTheSecret
+      $ touch .gitignore ( as hidden file)
   * https://github.com/github/gitignore/blob/master/Node.gitignore
     ( for instance , node_modules is ignored. All packages might be installed with "npm install" command )
 
