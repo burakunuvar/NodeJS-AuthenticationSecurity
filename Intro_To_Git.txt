@@ -41,3 +41,15 @@ Part 3 : Gitignore & Cloning
         $ touch secret.txt
         $ mkdir GitClone
         $ git clone https://github.com/burakunuvar/intro-to-git.git
+
+Part 4 : Branching and Merging
+
+    Create a new branch
+        $ git branch Branch_Name
+    // list all branches and the master
+        $ git branch
+    // switch to a specific branch
+        $ git checkout Branch_Name
+
+        $ git add .
+        & git commit -m " message "
