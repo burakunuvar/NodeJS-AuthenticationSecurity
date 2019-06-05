@@ -1,0 +1,8 @@
+#Comment 1 : OS Files
+.DS_Store
+#Comment 2 : passwords and API Keys
+secretfile.txt
+#Comment 3 : Use asterisk sign to ignore all files with specific type
+*.md // ignores all md files
+#Comment 4 : ignore a folder
+GitClone/
