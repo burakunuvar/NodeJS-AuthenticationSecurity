@@ -52,10 +52,11 @@ Part 4 : Branching and Merging
         $ git checkout Branch_Name
 
         $ git add .
-        & git commit -m " message "
+        $ git commit -m " message "
 
     // log the status , checkout to master branch and merge the updates
-        & git merge Branch_Name
+        $ git merge Branch_Name
 
     // to push your created branch and set the remote as upstream
-        git push --set-upstream origin <branch_name>
+        $ git commit -m "Make the branch Part4 ready to push"
+        $ git push --set-upstream origin <branch_name>
