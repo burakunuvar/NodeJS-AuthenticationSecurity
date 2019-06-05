@@ -1,5 +1,25 @@
 
-$ git init
-$ ls -a
-& git status
-& git add Intro_To_Git.txt
+Part 1 : Working Directory == >  Staging Area == > Local Repository
+
+  Build working directory and the initial docs
+    $ mkdir GitandGitHub
+    $ touch Intro_To_Git.txt
+
+  Initialize Git and list all files to confirm .git is built successfully
+    $ git init
+    $ ls -a
+
+  Check Staging area with no files and add initial doc to staging area
+    $ git status
+    $ git add Intro_To_Git.txt
+  //to add all files :
+    $ git add .
+
+  Commit the docs in staging area to local repository
+    $ git commit -m "Complete Part 1"
+
+  Log previous commits and differences between old versions
+    $ git log
+    & git diff Intro_To_Git.txt
+  //if the file is broken and you want the latest working version:
+    & git checkout Intro_To_Git.txt
