@@ -3,7 +3,7 @@
 #Comment 2 : passwords and API Keys
 secretfile.txt
 #Comment 3 : Use asterisk sign to ignore all files with specific type
-*.md // ignores all md files
+#md files were here on previous commits
 #Comment 4 : ignore a folder
 GitClone/
 

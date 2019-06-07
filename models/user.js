@@ -8,8 +8,8 @@ const userSchema = new mongoose.Schema({
 });
 
 // const secret = "SECRET=ThisIsTheSecret";
-const secret = process.env.SECRET;
-userSchema.plugin(encrypt, { secret: secret , encryptedFields: ["password"] });
+// const secret = process.env.SECRET;
+// userSchema.plugin(encrypt, { secret: secret , encryptedFields: ["password"] });
 
 const User = mongoose.model("User", userSchema);
 

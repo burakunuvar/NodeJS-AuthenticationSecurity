@@ -57,15 +57,18 @@ L3 Security : Hashing Passwords
   * build v3 for Secret Project
   * https://www.npmjs.com/package/md5
   * Hashing uses a hash function, which replaced key in encryption and provides a one way - irreversible approach.
-  & npm i md5
 
-    Issue : Hacking 101 :
-      * https://plaintextoffenders.com/
-      * https://haveibeenpwned.com/
-      * all words from dictionary, all numbers from telephone book = ~ 19.8 B
+  ```
+  $ npm i md5
+
+  ```
+
+Issue : Hacking 101 :
+  * https://plaintextoffenders.com/
+  * https://haveibeenpwned.com/
+  * all words from dictionary, all numbers from telephone book = ~ 19.8 B
           TAKES ALMOST 1 SECOND WITH A GPU TO CALCULATE, for MD5 Hashes
-      * https://en.wikipedia.org/wiki/List_of_the_most_common_passwords
-
+  * https://en.wikipedia.org/wiki/List_of_the_most_common_passwords
 
 L4 Security : Salting and Hashing ( bcrypty instead of MD )
   * MD5 : 20B per sec by GPU

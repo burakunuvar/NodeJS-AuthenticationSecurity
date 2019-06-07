@@ -60,3 +60,6 @@ Part 4 : Branching and Merging
     // to push your created branch and set the remote as upstream
         $ git commit -m "Make the branch Part4 ready to push"
         $ git push --set-upstream origin <branch_name>
+
+    Basic writing and formatting syntax :
+        https://help.github.com/en/articles/basic-writing-and-formatting-syntax

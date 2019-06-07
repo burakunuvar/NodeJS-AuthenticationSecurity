@@ -7,3 +7,7 @@ Remote Repository :
 
 Learn Git by game :
   https://learngitbranching.js.org/
+
+Basic writing and formatting syntax :
+https://help.github.com/en/articles/basic-writing-and-formatting-syntax
+https://guides.github.com/features/mastering-markdown/
