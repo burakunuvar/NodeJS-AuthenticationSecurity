@@ -108,13 +108,13 @@ If previous versions required use [Node Version Manager ](https://github.com/nvm
 
 ### L5 Security Cookies and Sessions
 
--   [passport](https://www.npmjs.com/package/passport)
+* [passport](https://www.npmjs.com/package/passport)
 
--   [passport-local](https://www.npmjs.com/package/passport-local)
+* [passport-local](https://www.npmjs.com/package/passport-local)
 
--   [passport-local-mongoose](https://www.npmjs.com/package/passport-local-mongoose)
+- [passport-local-mongoose](https://www.npmjs.com/package/passport-local-mongoose)
 
--   [express-session](https://www.npmjs.com/package/passport)
+- [express-session](https://www.npmjs.com/package/passport)
 
 > Part1 : Implementing the Modules
 
@@ -247,3 +247,108 @@ app.get("/logout", function(req, res){
     res.redirect("/");
 });
 ```
+
+### L6 S OAuth - Open Authorization
+Access information on 3rd party web sites , such as other users' emails or contacts etc
+OAuth helps log in with Facebook, Twitter, Github etc and provides :
+
+=> Granular Level of access
+
+=> Read/Read+Write Access
+
+=> 3rd party can revoke access
+
+- Step1 : Set Up Your App on 3rd party's developer page
+- Step2 : Redirect to Authenticate
+- Step3 : User Log In on 3rd party
+- Step4 : Grant Permission
+- Step5 : Receive Authorization (one time, to authenticate and log in )
+- Step6 : Exchange AuthCode for Access Token (temporary, to access pieces of information)
+
+#### Login with Google and OAuth
+
+- [passport-google-oauth20](http://www.passportjs.org/packages/passport-google-oauth20/)
+
+- [Google Developer Console] : (https://console.developers.google.com/)
+
+ - Create Project Secret > Update OAuth consent screen > Receive Credentials
+
+- Save the credentials in .env file
+
+ - CLIENT_ID=69...
+ - CLIENT_SECRET=ctB_n...
+
+- Install and require the package :
+
+ - ``` npm install passport-google-oauth20 ```
+
+ - ``` const GoogleStrategy = require('passport-google-oauth20').Strategy; ```
+
+
+- Update app.js with new strategy :
+
+ - GoogleStrategy
+
+ ```
+passport.use(new GoogleStrategy({
+    clientID: GOOGLE_CLIENT_ID, ` => process.env.CLIENT_ID `
+    clientSecret: GOOGLE_CLIENT_SECRET, `process.env.CLIENT_SECRET `
+    callbackURL: "http://www.example.com/auth/google/callback"  => `	http://localhost:3000/auth/google/secrets`
+
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+```
+
+ - Warning 1: In case of depreciation warning add ` => userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo" ` to the GoogleStrategy
+
+ - Warning 2 : Create a new function for by referring to [Stackoverflow-findorcreate](https://stackoverflow.com/questions/20431049/what-is-function-user-findorcreate-doing-and-when-is-it-called-in-passport) and [Mongoose-findOrCreate](https://www.npmjs.com/package/mongoose-findorcreate
+). Add the new plugin into user schema :
+
+ ```const findOrCreate = require('mongoose-findorcreate')```
+
+ ```userSchema.plugin(findOrCreate)```
+
+ `npm i mongoose-findorcreate`
+
+
+
+- Make necessary updates on register.js and login.js to enable sign up with Google
+
+- Build new route for /auth/google based on [passport-google-oauth20](http://www.passportjs.org/packages/passport-google-oauth20/) and add the secret route :
+```
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile'] }));
+```
+which will call :
+```
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/callback');
+  });
+```
+
+- Replace serialize and deserialize of passportLocalMongoose syntax by general syntax; since the first is for only local strategy whereas the second is for all :
+```
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+  });
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+      done(err, user);
+    });
+  });
+{
+```
+
+- Update the User schema with the google_ID , to enable an association to user_ID. Otherwise, all login requests will generate a new user since the app will consider them as new.
+
+- [Social Buttons for bootstrap](https://lipis.github.io/bootstrap-social/) and update the header.ejs file with the css resource
+
+ - use " btn-social btn-google " on classes for register and login pages
