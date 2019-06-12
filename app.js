@@ -91,12 +91,40 @@ app.get("/register", function(req, res) {
 
 app.get("/secret", function(req, res) {
   if(req.isAuthenticated()){
-    res.render("secret");
+    User.find({"secret":{$ne:null}},function(err,usersWithSecret){
+      if(err){
+        console.log(err);
+      }else{
+        res.render("secret",{usersWithSecret:usersWithSecret});
+      }
+    });
   }else{
     res.redirect("login");
   }
-
 });
+
+app.get("/submit", function(req, res) {
+  if(req.isAuthenticated()){
+    res.render("submit");
+  }else{
+    res.redirect("login");
+  }
+});
+
+app.post("/submit",function(req,res){
+    const submittedSecret = req.body.secret;
+    User.findById(req.user.id,function(err,foundUser){
+      if(err){
+        console.log(err);
+      }else{
+        foundUser.secret = submittedSecret;
+        foundUser.save(function(){
+          res.redirect("/secret");
+        });
+      }
+    });
+});
+
 
 app.post("/register", function(req, res) {
   const newUser= new User({

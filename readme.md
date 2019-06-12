@@ -352,3 +352,65 @@ passport.deserializeUser(function(id, done) {
 - [Social Buttons for bootstrap](https://lipis.github.io/bootstrap-social/) and update the header.ejs file with the css resource
 
  - use " btn-social btn-google " on classes for register and login pages
+
+
+#### Complete the Project
+
+- build "/submit" routes for get and post
+ - update the User Schema with "secret".
+ - Apply findById for user ID, to add new secret and save
+
+ ```
+ app.get("/submit", function(req, res) {
+   if(req.isAuthenticated()){
+     res.render("submit");
+   }else{
+     res.redirect("login");
+   }
+ });
+
+ app.post("/submit",function(req,res){
+     const submittedSecret = req.body.secret;
+     User.findById(req.user.id,function(err,foundUser){
+       if(err){
+         console.log(err);
+       }else{
+         foundUser.secret = submittedSecret;
+         foundUser.save(function(){
+           res.redirect("/secret");
+         });
+       }
+     });
+ });
+ ```
+- Update secrets route :
+ - remove authentication and make public (optional)
+ - Use [MongoDB - Not Null](https://stackoverflow.com/questions/4057196/how-do-you-query-for-is-not-null-in-mongo) to find all users with secret
+ - Pass the found array of objects to secrets.ejs
+
+ ```
+ app.get("/secret", function(req, res) {
+   if(req.isAuthenticated()){
+     User.find({"secret":{$ne:null}},function(err,usersWithSecret){
+       if(err){
+         console.log(err);
+       }else{
+         res.render("secret",{usersWithSecret:usersWithSecret});
+       }
+     });
+   }else{
+     res.redirect("login");
+   }
+ });
+
+ ```
+- Update the secrets.ejs to render all secrets
+ - ( forEach..)
+
+ ```
+<%  usersWithSecret.forEach(function(user){ %>
+    <p class="secret-text">
+      <%= user.secret %>
+    </p>
+<%  }) %>
+```
