@@ -1,0 +1,62 @@
+Part 1 : Working Directory == >  Staging Area == > Local Repository
+
+    Build working directory and the initial docs
+        $ mkdir GitandGitHub
+        $ touch Intro_To_Git.txt
+
+    Initialize Git and list all files to confirm .git is built successfully
+        $ git init
+        $ ls -a
+
+    Check Staging area with no files and add initial doc to staging area
+        $ git status
+        $ git add Intro_To_Git.txt
+    //to add all files :
+        $ git add .
+    //undo what you@ve added :
+        $ git rm --cached -r .
+
+    Commit the docs in staging area to local repository
+        $ git commit -m "Complete Part 1"
+
+    Log previous commits and differences between old versions
+        $ git log
+        & git diff Intro_To_Git.txt
+    //if the file is broken and you want the latest working version:
+        & git checkout Intro_To_Git.txt
+
+Part 2 : Local Repository (commit 1-2-3...) == > Remote Repository (commit 1-2-3...)
+
+    Create a new repository at Github : NodeJS-AuthenticationSecurity
+    // by convention, use "origin" for the name of remote
+        & git remote add origin https://github.com/burakunuvar/NodeJS-AuthenticationSecurity.git
+    // push the "master"; the branch of all commits (the default, or main one)
+        $ git push -u origin master
+
+    * Local Repository is the .git file in working directory
+    * Remote Repository is GitHub ( host all the code and the updates)
+
+Part 3 : Gitignore & Cloning
+        $ touch Intro_To_Git.txt
+        $ touch secret.txt
+        $ mkdir GitClone
+        $ git clone https://github.com/burakunuvar/intro-to-git.git
+
+Part 4 : Branching and Merging
+
+    Create a new branch
+        $ git branch Branch_Name
+    // list all branches and the master
+        $ git branch
+    // switch to a specific branch
+        $ git checkout Branch_Name
+
+        $ git add .
+        $ git commit -m " message "
+
+    // log the status , checkout to master branch and merge the updates
+        $ git merge Branch_Name
+
+    // to push your created branch and set the remote as upstream
+        $ git commit -m "Make the branch Part4 ready to push"
+        $ git push --set-upstream origin <branch_name>
